@@ -2,7 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { ZoomInIcon, ZoomOutIcon } from "lucide-react";
-import { Fragment, useState } from "react";
+import { useState } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import {
 	ComposableMap,
 	Geographies,
@@ -10,7 +11,15 @@ import {
 	Marker,
 	ZoomableGroup,
 } from "react-simple-maps";
-import ReactTooltip, { Tooltip } from "react-tooltip";
+import { Tooltip } from "react-tooltip";
+
+function TooltipContent({ title }: { title: string }) {
+	return (
+		<div className="p-2 rounded shadow">
+			<p className="font-mono">{title}</p>
+		</div>
+	);
+}
 
 function MapMarker({
 	coordinates,
@@ -20,7 +29,7 @@ function MapMarker({
 		<Marker
 			coordinates={coordinates}
 			data-tooltip-id="map-tooltip"
-			data-tooltip-html={`Hello this is ${title}!`}
+			data-tooltip-html={renderToStaticMarkup(TooltipContent({ title }))}
 			data-tooltip-place="top"
 		>
 			<g
