@@ -4,30 +4,31 @@ import { MapMarker } from "@/components/map-marker";
 import { Button } from "@/components/ui/button";
 import { ZoomInIcon, ZoomOutIcon } from "lucide-react";
 import { useState } from "react";
-import { renderToStaticMarkup } from "react-dom/server";
 import {
 	ComposableMap,
 	Geographies,
 	Geography,
-	Marker,
 	ZoomableGroup,
 } from "react-simple-maps";
 import { Tooltip } from "react-tooltip";
 
+const PROJECTION_CENTER = [120, -2] as [number, number];
+const PROJECTION_SCALE = 1000;
+
 export function IndonesiaMap() {
 	const [position, setPosition] = useState({
-		coordinates: [0, 0] as [number, number],
+		coordinates: PROJECTION_CENTER,
 		zoom: 1,
 	});
 
 	function handleZoomIn() {
 		if (position.zoom >= 4) return;
-		setPosition((pos) => ({ ...pos, zoom: pos.zoom * 2 }));
+		setPosition((pos) => ({ ...pos, zoom: pos.zoom + 1 }));
 	}
 
 	function handleZoomOut() {
 		if (position.zoom <= 1) return;
-		setPosition((pos) => ({ ...pos, zoom: pos.zoom / 2 }));
+		setPosition((pos) => ({ ...pos, zoom: pos.zoom - 1 }));
 	}
 
 	function handleMoveEnd(position: {
@@ -51,8 +52,8 @@ export function IndonesiaMap() {
 				<Tooltip id="map-tooltip" />
 				<ComposableMap
 					projectionConfig={{
-						scale: 1000,
-						center: [120, -2],
+						scale: PROJECTION_SCALE,
+						center: PROJECTION_CENTER,
 					}}
 				>
 					<ZoomableGroup

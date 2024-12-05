@@ -9,7 +9,6 @@ import {
 	ComposableMap,
 	Geographies,
 	Geography,
-	Marker,
 	ZoomableGroup,
 } from "react-simple-maps";
 import { Tooltip } from "react-tooltip";
