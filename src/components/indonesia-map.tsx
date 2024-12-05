@@ -14,7 +14,7 @@ import {
 } from "react-simple-maps";
 import { Tooltip } from "react-tooltip";
 
-export function WorldMap() {
+export function IndonesiaMap() {
 	const [position, setPosition] = useState({
 		coordinates: [0, 0] as [number, number],
 		zoom: 1,
@@ -49,13 +49,18 @@ export function WorldMap() {
 					</Button>
 				</div>
 				<Tooltip id="map-tooltip" />
-				<ComposableMap>
+				<ComposableMap
+					projectionConfig={{
+						scale: 1000,
+						center: [120, -2],
+					}}
+				>
 					<ZoomableGroup
 						zoom={position.zoom}
 						center={position.coordinates}
 						onMoveEnd={handleMoveEnd}
 					>
-						<Geographies geography="/world.json">
+						<Geographies geography="/indonesia.json">
 							{({ geographies }) =>
 								geographies.map((geo) => (
 									<Geography
@@ -67,9 +72,8 @@ export function WorldMap() {
 								))
 							}
 						</Geographies>
-						<MapMarker coordinates={[-101, 53]} title="Canada" />
-						<MapMarker coordinates={[-102, 38]} title="USA" />
-						<MapMarker coordinates={[-103, 25]} title="Mexico" />
+						<MapMarker coordinates={[107.6089, -6.9175]} title="Bandung" />
+						<MapMarker coordinates={[112.6304, -7.9797]} title="Malang" />
 					</ZoomableGroup>
 				</ComposableMap>
 			</div>
